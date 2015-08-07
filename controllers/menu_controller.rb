@@ -15,7 +15,8 @@ class MenuController
     puts "2 - Create an entry"
     puts "3 - Search for an entry"
     puts "4 - Import entries from a CSV"
-    puts "5 - Exit"
+    puts "5 - View Entry Number n"
+    puts "6 - Exit"
     print "Enter your selection: "
  
 
@@ -40,6 +41,10 @@ class MenuController
         read_csv
         main_menu
       when 5
+        system "clear"
+        view_entry_n
+        main_menu
+      when 6
         puts "Good-bye!"
         exit(0)
       else
@@ -50,10 +55,32 @@ class MenuController
   end
 
   def view_all_entries
+   
+   @address_book.entries.each do |entry|
+   system "clear"
+   puts entry.to_s
+   entry_submenu(entry)
+   end
+   system "clear"
+   puts "End of entries"
+  
   end
 
   def create_entry
-    
+   
+   system "clear"
+   puts "New AddressBloc Entry"
+   print "Name: "
+   name = gets.chomp
+   print "Phone number: "
+   phone = gets.chomp
+   print "Email: "
+   email = gets.chomp
+   @address_book.add_entry(name, phone, email)
+
+   system "clear"
+   puts "New entry created"
+
   end
 
   def search_entries
@@ -61,4 +88,44 @@ class MenuController
 
   def read_csv
   end
+
+  def view_entry_Number_n
+
+    system "clear"
+    puts "Enter entry number"
+    print "Entry number: "
+    selection = gets.chomp
+
+    @address_book.entries.each_with_index do |entry, index|
+      if selection.to_i - 1 == index
+        puts entry
+      else
+        puts "That's not a valid entry. Try again."
+      end
+    end
+  end
+
+  def entry_submenu(entry)
+
+   puts "n - next entry"
+   puts "d - delete entry"
+   puts "e - edit this entry"
+   puts "m - return to main menu"
+
+   selection = gets.chomp
+
+   case selection
+   when "n"
+   when "d"
+   when "e"
+   when "m"
+     system "clear"
+     main_menu
+   else
+     system "clear"
+     puts "#{selection} is not a valid input"
+     entries_submenu(entry)
+   end
+  end
+  
 end
