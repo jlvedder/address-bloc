@@ -89,19 +89,17 @@ class MenuController
   def read_csv
   end
 
-  def view_entry_Number_n
+  def view_entry_n
 
     system "clear"
     puts "Enter entry number"
     print "Entry number: "
-    selection = gets.chomp
+    selection = gets.chomp.to_i
 
-    @address_book.entries.each_with_index do |entry, index|
-      if selection.to_i - 1 == index
-        puts entry
-      else
-        puts "That's not a valid entry. Try again."
-      end
+    if selection == 0 || selection > @address_book.entries.count
+      puts "That's not a valid entry. Try again."
+    else
+      puts @address_book.entries[selection - 1].to_s
     end
   end
 
