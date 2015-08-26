@@ -33,14 +33,32 @@ class AddressBook
  
   end
 
-
-
   def remove_entry(name, phone, email)
     entries.each_with_index do |entry,index|
       if name == entry.name && phone == entry.phone_number && email == entry.email
         entries.delete_at(index)      
       end
     end
+  end
+
+  def binary_search(name)
+    lower = 0
+    upper = entries.length - 1
+
+    while lower <= upper
+      mid = (lower + upper) / 2
+      mid_name = entries[mid].name
+ 
+      if name == mid_name
+        return entries[mid]
+      elsif name < mid_name
+        upper = mid - 1
+      elsif name > mid_name
+        lower = mid + 1
+      end
+    end
+
+    return nil
   end
 
 end
